@@ -6,7 +6,7 @@ import javax.swing.*;
  * de pasto. Esta interface <b>deve</b> ser implementada por todas as entidades
  * que existem na simulação do pasto.
  */
-public interface Entidade {
+public interface Entidade{
 
     public void tick();
 

@@ -5,6 +5,9 @@ import pasto.engine.Engine;
 import pasto.entidade.Cerca;
 import pasto.entidade.Dummy;
 import pasto.entidade.Entidade;
+import pasto.entidade.Lobo;
+import pasto.entidade.Ovelha;
+import pasto.entidade.Planta;
 import pasto.gui.PastoGUI;
 
 import java.awt.Point;
@@ -20,13 +23,12 @@ public class Pasto {
 
     private int         largura = 20;
     private int         altura = 20;
-
     private int         dummys = 20;
     
     // Insira aqui a quantidade em questão dos seres no seu pasto
-    private int         lobos;
-    private int         ovelhas;
-    private int         plantas;
+    private int         lobos = 2;
+    private int         ovelhas = 2;
+    private int         plantas = 3;
     private int         cercas;
 
     private Set<Entidade> mundo = 
@@ -42,7 +44,7 @@ public class Pasto {
      * Cria uma nova instância desta classe e posiciona as entidades
      * nela, em posições aleatórias.
      */
-    public Pasto() {
+    public Pasto(){
 
         Engine engine = new Engine(this);
         gui = new PastoGUI(largura, altura, engine);
@@ -63,10 +65,20 @@ public class Pasto {
          * Note que quando você criar suas entidades, você terá que fazer um for para
          * cada animal, utilizando a variável em questao: lobos, ovelhas, plantas, etc.
          */
-        for (int i = 0; i < dummys; i++) {
-            Entidade dummy = new Dummy(this, true);
-            adicionaEntidade(dummy, getPosicaoLivre(dummy));
-        }
+        for (int i = 0; i < plantas; i++){
+			Entidade planta = new Planta(this);
+			adicionaEntidade(planta, getPosicaoLivre(planta));
+		}
+        
+        for (int i = 0; i < ovelhas; i++){
+			Entidade ovelha = new Ovelha(this);
+			adicionaEntidade(ovelha, getPosicaoLivre(ovelha));
+		}
+        
+        for (int i = 0; i < lobos; i++){
+			Entidade lobo = new Lobo(this);
+			adicionaEntidade(lobo, getPosicaoLivre(lobo));
+		}
 
         gui.update();
     }
@@ -195,12 +207,17 @@ public class Pasto {
     }
 
 
-    public Collection<Point> getVizinhosLivres(Entidade entidade) {
+    public Collection<Point> getVizinhosLivres(Entidade entidade){
         Set<Point> free = new HashSet<Point>();
+        
         Point p;
-
-        int entityX = (int)getPosicaoEntidade(entidade).getX();
-        int entityY = (int)getPosicaoEntidade(entidade).getY();
+        Point posicao = getPosicaoEntidade(entidade);
+        int entityX, entityY;
+        if(posicao!=null) {
+        	entityX = (int)posicao.getX();
+        	entityY = (int)posicao.getY();
+         
+        
 
         for (int x = -1; x <= 1; x++) {
             for (int y = -1; y <= 1; y++) {
@@ -210,6 +227,7 @@ public class Pasto {
                 free.add(p);
             }
         }
+    }
         return free;
     }
 

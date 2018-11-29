@@ -95,7 +95,7 @@ public class PastoGUI extends JFrame implements ActionListener {
      * significa que alguem pressionou algum dos botões: 
      * Iniciar, Parar ou sair
      */
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent e){
         if (e.getSource() == startButton) {
             startButton.setEnabled(false);
             stopButton.setEnabled(true);
@@ -120,6 +120,7 @@ public class PastoGUI extends JFrame implements ActionListener {
      */
 
     public void adicionaEntidade(Entidade e, Point p) {
+    	if(p!=null) {
         ImageIcon icon = e.getImagem();
 
         java.util.List<ImageIcon> l = icons.get(p);
@@ -135,6 +136,7 @@ public class PastoGUI extends JFrame implements ActionListener {
         
         size++;
     }
+    }
 
     public void moveEntity(Entidade e, Point old, Point ny) {
         removeEntidade(e, old);
@@ -149,7 +151,7 @@ public class PastoGUI extends JFrame implements ActionListener {
 
 
     public void removeEntidade(Entidade e, Point p) {
-        
+        if(p!=null) {
         ImageIcon icon0 = e.getImagem();
 
         java.util.List<ImageIcon> l = icons.get(p);
@@ -164,6 +166,7 @@ public class PastoGUI extends JFrame implements ActionListener {
         grid[x][y].setIcon(icon);
         
         size--;
+    }
     }
 
     public void update() {
